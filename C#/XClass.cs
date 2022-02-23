@@ -71,21 +71,21 @@ namespace SharpXDecrypt
                 else if (xsh.version.StartsWith("5") || xsh.version.StartsWith("6"))
                 {
                     byte[] data = Convert.FromBase64String(xsh.encryptPw);
-                    byte[] Key = new SHA256Managed().ComputeHash(Encoding.ASCII.GetBytes(userSID.Name + userSID.SID));
+                    byte[] Key = new SHA256Managed().ComputeHash(Encoding.Default.GetBytes(userSID.Name + userSID.SID));
                     byte[] passData = new byte[data.Length - 0x20];
                     Array.Copy(data, 0, passData, 0, data.Length - 0x20);
                     byte[] decrypted = RC4.Decrypt(Key, passData);
-                    password = Encoding.ASCII.GetString(decrypted);
+                    password = Encoding.Default.GetString(decrypted);
                 }else if (xsh.version.StartsWith("7"))
                 {
                     string strkey1 = new string(userSID.Name.ToCharArray().Reverse().ToArray()) + userSID.SID;
                     string strkey2 = new string(strkey1.ToCharArray().Reverse().ToArray());
                     byte[] data = Convert.FromBase64String(xsh.encryptPw);
-                    byte[] Key = new SHA256Managed().ComputeHash(Encoding.ASCII.GetBytes(strkey2));
+                    byte[] Key = new SHA256Managed().ComputeHash(Encoding.Default.GetBytes(strkey2));
                     byte[] passData = new byte[data.Length - 0x20];
                     Array.Copy(data, 0, passData, 0, data.Length - 0x20);
                     byte[] decrypted = RC4.Decrypt(Key, passData);
-                    password = Encoding.ASCII.GetString(decrypted);
+                    password = Encoding.Default.GetString(decrypted);
                 }
             }
             else
