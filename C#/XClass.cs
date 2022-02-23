@@ -22,7 +22,7 @@ namespace SharpXDecrypt
         static private string hashMasterPasswd = null;
         public static Boolean Decrypt()
         {
-            List<string>  userDataPaths = GetUserDataPath();
+            List<string> userDataPaths = GetUserDataPath();
             Utils.UserSID userSID = Utils.GetUserSID();
             foreach (string userDataPath in userDataPaths)
             {
@@ -43,6 +43,26 @@ namespace SharpXDecrypt
                     }
                 }
             }
+            return true;
+        }
+        public static Boolean Decrypt(string selectPath)
+        {
+            Utils.UserSID userSID = Utils.GetUserSID();               
+            List<string> xshPathList = EnumXshPath(selectPath);
+            foreach (string xshPath in xshPathList)
+            {
+                Xsh xsh = XSHParser(xshPath);
+                if (xsh.encryptPw != null)
+                {
+                    Console.WriteLine("  XSHPath: " + xshPath);
+                    xsh.password = Xdecrypt(xsh, userSID);
+                    Console.WriteLine("  Host: " + xsh.host);
+                    Console.WriteLine("  UserName: " + xsh.userName);
+                    Console.WriteLine("  Password: " + xsh.password);
+                    Console.WriteLine("  Version: " + xsh.version);
+                    Console.WriteLine();
+                }
+            }   
             return true;
         }
         public static string Xdecrypt(Xsh xsh, Utils.UserSID userSID)
@@ -143,7 +163,15 @@ namespace SharpXDecrypt
         public static List<string> EnumXshPath(string userDataPath)
         {
             List<string> xshPathList = new List<string>();
-            string sessionsPath = userDataPath + "\\Xshell\\Sessions";
+            string sessionsPath = "";
+            if (userDataPath.EndsWith("7") || userDataPath.EndsWith("6") || userDataPath.EndsWith("5"))
+            {
+                sessionsPath = userDataPath + "\\Xshell\\Sessions";
+            }
+            else
+            {
+                sessionsPath = userDataPath;
+            }
             if (Directory.Exists(sessionsPath))//判断是否存在
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(sessionsPath);
@@ -171,7 +199,7 @@ namespace SharpXDecrypt
             regSubKey = regRootKey.OpenSubKey(strRegPath);
             foreach (string version in regSubKey.GetSubKeyNames())
             {
-                if (!version.Equals("LiveUpdate"))
+                if (version.StartsWith("5") || version.StartsWith("6") || version.StartsWith("7"))
                 {
                     string strUserDataRegPath = strRegPath + "\\" + version + "\\UserData";
                     regSubKey = regRootKey.OpenSubKey(strUserDataRegPath);

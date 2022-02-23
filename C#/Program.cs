@@ -21,15 +21,15 @@ namespace SharpXDecrypt
             Console.WriteLine("Github: https://github.com/JDArmy");
             Console.WriteLine("[!] WARNING: For learning purposes only,please delete it within 24 hours after downloading!");
             Console.WriteLine();
-            XDecrypt();
+            if (args.Length == 1)
+            {
+                XClass.Decrypt(args[0]);
+            }
+            else
+            {
+                XClass.Decrypt();
+            }
             Console.WriteLine("[*] read done!");
-        }
-
-        public static void XDecrypt()
-        {
-            
-            
-            XClass.Decrypt();
         }
 
     }
