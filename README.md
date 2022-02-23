@@ -66,6 +66,7 @@ execute-assembly /path/to/SharpXDecrypt.exe
 ## 更新日志 
 
 - v0.1.0, 2022-02-22, 创建
+- v0.1.1, 2022-02-23, 修复中文用户名解密失败问题
 
 
 
