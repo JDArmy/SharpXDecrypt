@@ -97,7 +97,7 @@ execute-assembly /path/to/SharpXDecrypt.exe  "C:\Users\asus\Documents\NetSarang 
 
 - v0.1.0, 2022-02-22, 创建
 - v0.1.1, 2022-02-23, 修复中文用户名解密失败问题
-- v0.1.2, 2022-02-23, 修复Xshell5执行报错问题，增加执行session路径功能
+- v0.1.2, 2022-02-23, 修复Xshell5执行报错问题，增加指定session路径功能
 
 
 
