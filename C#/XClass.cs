@@ -88,7 +88,7 @@ namespace SharpXDecrypt
                     byte[] decrypted = RC4.Decrypt(Key, passData);
                     password = Encoding.ASCII.GetString(decrypted);
                 }
-                else if (xsh.version.StartsWith("5") || xsh.version.StartsWith("6"))
+                else if (xsh.version.StartsWith("5") || xsh.version.StartsWith("6") || xsh.version.StartsWith("7.0"))
                 {
                     byte[] data = Convert.FromBase64String(xsh.encryptPw);
                     byte[] Key = new SHA256Managed().ComputeHash(Encoding.Default.GetBytes(userSID.Name + userSID.SID));
