@@ -23,26 +23,35 @@ namespace SharpXDecrypt
         public static Boolean Decrypt()
         {
             List<string> userDataPaths = GetUserDataPath();
-            Utils.UserSID userSID = Utils.GetUserSID();
-            foreach (string userDataPath in userDataPaths)
+            if (userDataPaths.Count > 0)
             {
-                CheckMasterPw(userDataPath);
-                List<string> xshPathList = EnumXshPath(userDataPath);
-                foreach (string xshPath in xshPathList)
+                Utils.UserSID userSID = Utils.GetUserSID();
+                foreach (string userDataPath in userDataPaths)
                 {
-                    Xsh xsh = XSHParser(xshPath);
-                    if (xsh.encryptPw != null)
+                    CheckMasterPw(userDataPath);
+                    List<string> xshPathList = EnumXshPath(userDataPath);
+                    foreach (string xshPath in xshPathList)
                     {
-                        Console.WriteLine("  XSHPath: " + xshPath);
-                        xsh.password = Xdecrypt(xsh, userSID);
-                        Console.WriteLine("  Host: " + xsh.host);
-                        Console.WriteLine("  UserName: " + xsh.userName);
-                        Console.WriteLine("  Password: " + xsh.password);
-                        Console.WriteLine("  Version: " + xsh.version);
-                        Console.WriteLine();
+                        Xsh xsh = XSHParser(xshPath);
+                        if (xsh.encryptPw != null)
+                        {
+                            Console.WriteLine("  XSHPath: " + xshPath);
+                            xsh.password = Xdecrypt(xsh, userSID);
+                            Console.WriteLine("  Host: " + xsh.host);
+                            Console.WriteLine("  UserName: " + xsh.userName);
+                            Console.WriteLine("  Password: " + xsh.password);
+                            Console.WriteLine("  Version: " + xsh.version);
+                            Console.WriteLine();
+                        }
                     }
                 }
             }
+            else
+            {
+                Console.WriteLine("[-] UserPath Not Found!");
+                Console.WriteLine("[-] Please try : .\\SharpXDecrypt.exe \"[SessionsPath]\"");
+            }
+
             return true;
         }
         public static Boolean Decrypt(string selectPath)
@@ -201,10 +210,17 @@ namespace SharpXDecrypt
             {
                 if (version.StartsWith("5") || version.StartsWith("6") || version.StartsWith("7"))
                 {
-                    string strUserDataRegPath = strRegPath + "\\" + version + "\\UserData";
-                    regSubKey = regRootKey.OpenSubKey(strUserDataRegPath);
-                    Console.WriteLine("  UserPath: " + regSubKey.GetValue("UserDataPath"));
-                    userDataPath.Add(regSubKey.GetValue("UserDataPath").ToString());
+                    try
+                    {
+                        string strUserDataRegPath = strRegPath + "\\" + version + "\\UserData";
+                        regSubKey = regRootKey.OpenSubKey(strUserDataRegPath);
+                        Console.WriteLine("  UserPath: " + regSubKey.GetValue("UserDataPath"));
+                        userDataPath.Add(regSubKey.GetValue("UserDataPath").ToString());
+                    }
+                    catch (NullReferenceException e)
+                    {
+
+                    }
                 }
             }
             regSubKey.Close();
