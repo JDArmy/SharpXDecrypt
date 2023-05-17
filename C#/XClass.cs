@@ -184,14 +184,13 @@ namespace SharpXDecrypt
             if (Directory.Exists(sessionsPath))//判断是否存在
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(sessionsPath);
-                FileInfo[] files = directoryInfo.GetFiles();
+                FileInfo[] files = directoryInfo.GetFiles("*.xsh", SearchOption.AllDirectories);
                 foreach (FileInfo fileInfo in files)
                 {
                     string name = fileInfo.Name;
                     if (fileInfo.Extension.Equals(".xsh"))
                     {
-                        string sessionPath = sessionsPath + "\\" + name;
-                        xshPathList.Add(sessionPath);
+                        xshPathList.Add(fileInfo.FullName);
                     }
                 }
             }
